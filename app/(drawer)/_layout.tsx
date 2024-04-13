@@ -8,20 +8,24 @@ export default function Layout() {
     <Drawer
       screenOptions={{
         drawerHideStatusBarOnOpen: Platform.OS === 'ios',
-        drawerActiveBackgroundColor: colorTokens.light.orange.orange8,
-        drawerActiveTintColor: '#fff',
-        drawerInactiveTintColor: colorTokens.light.orange.orange9,
+        drawerActiveBackgroundColor: colorTokens.light.orange.orange3,
+        drawerActiveTintColor: colorTokens.light.orange.orange9,
+        drawerInactiveTintColor: colorTokens.light.orange.orange1,
         drawerStyle: {
-          backgroundColor: colorTokens.light.orange.orange3,
+          backgroundColor: colorTokens.light.orange.orange8,
         },
         drawerLabelStyle: {
           marginLeft: -20,
+          fontSize: 16,
         },
-
         headerStyle: {
-          backgroundColor: colorTokens.light.orange.orange3,
+          backgroundColor: colorTokens.light.orange.orange8,
         },
-        headerTintColor: colorTokens.light.orange.orange9,
+        headerTintColor: colorTokens.light.orange.orange3,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 18,
+        },
       }}>
       <Drawer.Screen
         name="(home)"

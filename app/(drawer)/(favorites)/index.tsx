@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
+
+import { Container } from '~/components';
 
 const Favorites = () => {
   return (
-    <View>
+    <Container padding="$4">
       <Text>Favorites</Text>
-    </View>
+    </Container>
   );
 };
 
