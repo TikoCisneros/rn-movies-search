@@ -7,7 +7,7 @@ export const getTrends =
   (page: number = 1) =>
   async (): Promise<ApiResult> => {
     const response = await fetch(
-      `${BASE_URL}/trending/all/day?language=en-US&api_key=${API_KEY}&page=${page}`
+      `${BASE_URL}/trending/movie/day?language=en-US&api_key=${API_KEY}&page=${page}`
     );
     const data = await response.json();
     return data;
@@ -15,7 +15,7 @@ export const getTrends =
 
 export const getSearchResults = async (query: string): Promise<ApiResult> => {
   const response = await fetch(
-    `${BASE_URL}/search/multi?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=1`
+    `${BASE_URL}/search/movie?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=1`
   );
   const data = await response.json();
   return data;
