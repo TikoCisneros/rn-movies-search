@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native';
 
 export const EMPTY_STRING = '' as const;
-export const EMPTY_ARRAY = [] as const;
+export const EMPTY_ARRAY = [];
 export const EMPTY_OBJECT = {} as const;
 export const ZERO = 0 as const;
 export const ONE_HALF = 1.5 as const;

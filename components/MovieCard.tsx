@@ -33,6 +33,7 @@ const MovieCard = ({
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w200${poster_path}` }}
             alt={itemTitle}
+            resizeMode="stretch"
             style={{
               borderTopRightRadius: 8,
               borderTopLeftRadius: 8,

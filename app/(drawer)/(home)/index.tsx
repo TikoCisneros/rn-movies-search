@@ -5,8 +5,8 @@ import { useDebounce } from 'use-debounce';
 
 import { Container, InputSearch } from '~/components';
 import Results from '~/components/home/Results';
-import { APP_TITLE, EMPTY_STRING, ZERO } from '~/constants';
-import { ApiResult } from '~/models';
+import { APP_TITLE, EMPTY_ARRAY, EMPTY_STRING, ZERO } from '~/constants';
+import { ApiResult, Item } from '~/models';
 import { getSearchResults, getTrends } from '~/services/api';
 import { Subtitle, Title } from '~/tamagui.config';
 
@@ -41,17 +41,21 @@ const Home = () => {
         </Card.Header>
       </Card>
       <Subtitle p="$3" pb="$1" enterStyle={{ opacity: 0 }} animation="lazy">
-        Trending
+        {searchQuery?.data?.results ? 'Search Results' : 'Trending'}
       </Subtitle>
-      {(trendsQuery.isLoading || searchQuery.isLoading) && (
+      {trendsQuery.isLoading || searchQuery.isLoading ? (
         <Spinner size="large" color="$orange9" py="$10" />
-      )}
-      {trendsQuery.isError && <Text>{JSON.stringify(trendsQuery.error)}</Text>}
-      {!trendsQuery.isLoading && !trendsQuery.isError && trendsQuery.data && (
-        <Results data={trendsQuery.data.results} />
+      ) : (
+        <Results data={getResults(searchQuery.data, trendsQuery.data)} />
       )}
     </Container>
   );
 };
+
+function getResults(queryResults?: ApiResult, trendsResults?: ApiResult): Item[] {
+  if (queryResults) return queryResults.results;
+  if (trendsResults) return trendsResults.results;
+  return EMPTY_ARRAY;
+}
 
 export default Home;
