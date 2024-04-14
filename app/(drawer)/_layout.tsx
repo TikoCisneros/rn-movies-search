@@ -23,7 +23,7 @@ export default function Layout() {
       <Drawer.Screen
         name="(home)"
         options={{
-          title: 'Movies',
+          title: 'Movieland',
           drawerIcon: (props) => <Ionicons name="home-outline" {...props} />,
         }}
       />

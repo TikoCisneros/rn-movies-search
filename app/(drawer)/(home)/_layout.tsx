@@ -1,6 +1,9 @@
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { colorTokens } from '@tamagui/themes';
 import { Stack } from 'expo-router';
+
+import { EMPTY_STRING } from '~/constants';
+
 export default function Layout() {
   return (
     <Stack
@@ -17,11 +20,14 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Movies',
+          title: EMPTY_STRING,
           headerLeft: (props) => <DrawerToggleButton {...props} />,
         }}
       />
-      <Stack.Screen name="(movie)/[id]" options={{ title: '', headerBackTitle: 'Back' }} />
+      <Stack.Screen
+        name="(movie)/[id]"
+        options={{ title: EMPTY_STRING, headerBackTitle: 'Back' }}
+      />
     </Stack>
   );
 }
