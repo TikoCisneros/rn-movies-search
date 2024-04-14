@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, ScrollView, Text, useTheme } from 'tamagui';
 
 import { Container, InputSearch } from '~/components';
+import { APP_TITLE } from '~/constants';
 import { getTrends } from '~/services/api';
 import { Title } from '~/tamagui.config';
 
@@ -18,7 +19,7 @@ const Home = () => {
     <Container>
       <Card paddingVertical="$4">
         <Card.Header space="$2.5">
-          <Title color={theme.orange8}>Welcome</Title>
+          <Title color={theme.orange8}>{APP_TITLE}</Title>
           <InputSearch size="$4" placeholder="Search movie by name..." />
         </Card.Header>
       </Card>

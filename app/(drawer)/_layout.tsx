@@ -3,6 +3,8 @@ import { colorTokens } from '@tamagui/themes';
 import { Drawer } from 'expo-router/drawer';
 import { Platform } from 'react-native';
 
+import { APP_TITLE, FAVORITES_TITLE } from '~/constants';
+
 export default function Layout() {
   return (
     <Drawer
@@ -23,14 +25,14 @@ export default function Layout() {
       <Drawer.Screen
         name="(home)"
         options={{
-          title: 'Movieland',
+          title: APP_TITLE,
           drawerIcon: (props) => <Ionicons name="home-outline" {...props} />,
         }}
       />
       <Drawer.Screen
         name="(favorites)"
         options={{
-          title: 'Favorite Movies',
+          title: FAVORITES_TITLE,
           drawerIcon: (props) => <Ionicons name="star-outline" {...props} />,
         }}
       />

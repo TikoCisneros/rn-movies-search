@@ -2,7 +2,7 @@ import { DrawerToggleButton } from '@react-navigation/drawer';
 import { colorTokens } from '@tamagui/themes';
 import { Stack } from 'expo-router';
 
-import { EMPTY_STRING } from '~/constants';
+import { EMPTY_STRING, NAV_BACK } from '~/constants';
 
 export default function Layout() {
   return (
@@ -26,7 +26,7 @@ export default function Layout() {
       />
       <Stack.Screen
         name="(movie)/[id]"
-        options={{ title: EMPTY_STRING, headerBackTitle: 'Back' }}
+        options={{ title: EMPTY_STRING, headerBackTitle: NAV_BACK }}
       />
     </Stack>
   );
