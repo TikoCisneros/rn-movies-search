@@ -18,14 +18,7 @@ export default function Layout() {
           marginLeft: -20,
           fontSize: 16,
         },
-        headerStyle: {
-          backgroundColor: colorTokens.light.orange.orange8,
-        },
-        headerTintColor: colorTokens.light.orange.orange3,
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 18,
-        },
+        headerShown: false,
       }}>
       <Drawer.Screen
         name="(home)"

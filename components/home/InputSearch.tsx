@@ -12,7 +12,13 @@ export function InputSearch(props: { size: SizeTokens; placeholder: string }) {
       borderRadius={8}
       paddingLeft={10}>
       <Ionicons name="search" size={24} color="gray" />
-      <Input flex={1} size={props.size} borderWidth={0} placeholder={props.placeholder} />
+      <Input
+        flex={1}
+        size={props.size}
+        placeholderTextColor={theme.gray11}
+        borderWidth={0}
+        placeholder={props.placeholder}
+      />
     </XStack>
   );
 }
