@@ -1,5 +1,9 @@
+import { DrawerToggleButton } from '@react-navigation/drawer';
 import { colorTokens } from '@tamagui/themes';
 import { Stack } from 'expo-router';
+
+import { FAVORITES_TITLE } from '~/constants';
+
 export default function Layout() {
   return (
     <Stack
@@ -12,7 +16,14 @@ export default function Layout() {
           fontWeight: 'bold',
           fontSize: 18,
         },
-      }}
-    />
+      }}>
+      <Stack.Screen
+        name="index"
+        options={{
+          title: FAVORITES_TITLE,
+          headerLeft: (props) => <DrawerToggleButton {...props} />,
+        }}
+      />
+    </Stack>
   );
 }
