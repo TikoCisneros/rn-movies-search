@@ -1,4 +1,7 @@
 export const EMPTY_STRING = '' as const;
+export const EMPTY_ARRAY = [] as const;
+export const EMPTY_OBJECT = {} as const;
+export const ZERO = 0 as const;
 
 /** Navigation */
 export const APP_TITLE = 'Movieland' as const;
