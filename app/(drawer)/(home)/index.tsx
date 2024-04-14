@@ -40,7 +40,7 @@ const Home = () => {
           />
         </Card.Header>
       </Card>
-      <Subtitle p="$3" enterStyle={{ opacity: 0 }} animation="lazy">
+      <Subtitle p="$3" pb="$1" enterStyle={{ opacity: 0 }} animation="lazy">
         Trending
       </Subtitle>
       {(trendsQuery.isLoading || searchQuery.isLoading) && (

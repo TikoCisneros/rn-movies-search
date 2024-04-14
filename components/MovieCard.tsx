@@ -22,9 +22,13 @@ const MovieCard = ({
     <Link key={id} href={`/(drawer)/(home)/(movie)/${id}`} asChild>
       <Card
         elevate
+        backgroundColor="$orange7"
         width={CARD_DIMENSIONS.width}
         height={CARD_DIMENSIONS.height}
-        backgroundColor="$orange7">
+        scale={0.9}
+        hoverStyle={{ scale: 0.925 }}
+        pressStyle={{ scale: 0.975 }}
+        animation="bouncy">
         <Card.Header padding="$2">
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w200${poster_path}` }}
