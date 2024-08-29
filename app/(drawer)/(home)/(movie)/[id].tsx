@@ -29,8 +29,6 @@ const Movie = () => {
     });
   }, [movie.data]);
 
-  console.log(JSON.stringify(movie.data));
-
   return <ScrollContainer>{renderBody()}</ScrollContainer>;
 
   function renderBody() {
