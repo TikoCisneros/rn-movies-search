@@ -1,14 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Card, Spinner, Text } from 'tamagui';
+import { Card, Spinner } from 'tamagui';
 import { useDebounce } from 'use-debounce';
 
-import { Container, InputSearch } from '~/components';
-import Results from '~/components/home/Results';
+import { Container, InputSearch, Results } from '~/components';
 import { APP_TITLE, EMPTY_ARRAY, EMPTY_STRING, ZERO } from '~/constants';
 import { ApiResult, Item } from '~/models';
 import { getSearchResults, getTrends } from '~/services/api';
-import { Subtitle, Title } from '~/tamagui.config';
+import { Title } from '~/tamagui.config';
 
 const Home = () => {
   const [query, setQuery] = useState<string>(EMPTY_STRING);
@@ -40,13 +39,13 @@ const Home = () => {
           />
         </Card.Header>
       </Card>
-      <Subtitle p="$3" pb="$1" enterStyle={{ opacity: 0 }} animation="lazy">
-        {searchQuery?.data?.results ? 'Search Results' : 'Trending'}
-      </Subtitle>
       {trendsQuery.isLoading || searchQuery.isLoading ? (
         <Spinner size="large" color="$orange9" py="$10" />
       ) : (
-        <Results data={getResults(searchQuery.data, trendsQuery.data)} />
+        <Results
+          data={getResults(searchQuery.data, trendsQuery.data)}
+          isResults={!!searchQuery?.data?.results}
+        />
       )}
     </Container>
   );
