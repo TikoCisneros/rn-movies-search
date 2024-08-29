@@ -53,7 +53,6 @@ const Movie = () => {
               margin: 12,
             }}
             borderRadius={6}
-            sharedTransitionTag={`movie-${id}`}
           />
         </ImageBackground>
         <YStack p="$3">
