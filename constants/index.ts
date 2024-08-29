@@ -18,3 +18,6 @@ export const NAV_BACK = 'Back' as const;
 
 /** Movie Card */
 export const CARD_GAP = 20 as const;
+
+/** Async Storage */
+export const FAVORITES_KEY = 'favorites' as const;

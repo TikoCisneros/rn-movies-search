@@ -1,13 +1,16 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { useEffect } from 'react';
-import { ImageBackground } from 'react-native';
+import { Stack, useLocalSearchParams, useNavigation } from 'expo-router';
+import { useEffect, useMemo } from 'react';
+import { ImageBackground, Pressable } from 'react-native';
 import { H1, Image, Paragraph, Spinner, Text, YStack } from 'tamagui';
 
 import { ScrollContainer } from '~/components';
-import { ONE_HALF, SCREEN_WIDTH, TW0 } from '~/constants';
-import { MediaType, MovieDetail } from '~/models';
+import { EMPTY_ARRAY, FAVORITES_KEY, ONE_HALF, SCREEN_WIDTH, TW0, ZERO } from '~/constants';
+import useAsyncStorage from '~/hooks/useAsyncStorage';
+import { Favorite, MediaType, MovieDetail } from '~/models';
 import { getMovieDetails } from '~/services/api';
+import { isValid } from '~/utils/common';
 
 const POSTER_DIMENSIONS = {
   width: SCREEN_WIDTH / TW0,
@@ -17,6 +20,7 @@ const POSTER_DIMENSIONS = {
 const Movie = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
+  const [favorites, updateFavorites] = useAsyncStorage<Favorite[]>(FAVORITES_KEY);
 
   const movie = useQuery<MovieDetail, Error>({
     queryKey: ['movie', id],
@@ -29,6 +33,22 @@ const Movie = () => {
     });
   }, [movie.data]);
 
+  const isFavorite = useMemo(() => isIdInFavorites(favorites, id), [favorites, id]);
+
+  function handleToggleFavorite(favorite: Favorite) {
+    return function () {
+      if (isFavorite) {
+        updateFavorites(
+          (favorites ?? EMPTY_ARRAY).filter(
+            (storedFavorite) => storedFavorite.id.localeCompare(favorite.id) !== ZERO
+          )
+        );
+        return;
+      }
+      updateFavorites([...(favorites ?? EMPTY_ARRAY), favorite]);
+    };
+  }
+
   return <ScrollContainer>{renderBody()}</ScrollContainer>;
 
   function renderBody() {
@@ -39,6 +59,21 @@ const Movie = () => {
     const { backdrop_path, poster_path, title, tagline, release_date, overview } = movie.data!;
     return (
       <>
+        <Stack.Screen
+          options={{
+            headerRight: () => (
+              <Pressable
+                onPress={handleToggleFavorite({
+                  id,
+                  mediaType: MediaType.MOVIE,
+                  name: title,
+                  thumb: poster_path,
+                })}>
+                <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={28} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
         <ImageBackground
           height={POSTER_DIMENSIONS.height}
           source={{
@@ -73,3 +108,8 @@ const Movie = () => {
 };
 
 export default Movie;
+
+function isIdInFavorites(favorites: Favorite[] | null, favoriteId: string) {
+  if (!favorites) return false;
+  return isValid(favorites.find(({ id }) => id.localeCompare(favoriteId) === ZERO));
+}
