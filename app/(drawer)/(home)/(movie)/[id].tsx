@@ -2,27 +2,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useEffect, useMemo } from 'react';
-import { ImageBackground, Pressable } from 'react-native';
-import { H1, Image, Paragraph, Spinner, Text, YStack } from 'tamagui';
+import { Pressable } from 'react-native';
+import { Spinner } from 'tamagui';
 
 import { ScrollContainer } from '~/components';
-import { EMPTY_ARRAY, FAVORITES_KEY, ONE_HALF, SCREEN_WIDTH, TW0, ZERO } from '~/constants';
-import useAsyncStorage from '~/hooks/useAsyncStorage';
-import { Favorite, MediaType, MovieDetail } from '~/models';
+import { MovieDetail } from '~/components/home/MovieDetail';
+import { ZERO } from '~/constants';
+import { useFavorites } from '~/hooks/useFavorites';
+import { Favorite, MediaType, MovieDetail as Movie } from '~/models';
 import { getMovieDetails } from '~/services/api';
 import { isValid } from '~/utils/common';
 
-const POSTER_DIMENSIONS = {
-  width: SCREEN_WIDTH / TW0,
-  height: SCREEN_WIDTH / ONE_HALF,
-};
-
-const Movie = () => {
+const MoviePage = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
-  const [favorites, updateFavorites] = useAsyncStorage<Favorite[]>(FAVORITES_KEY);
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
 
-  const movie = useQuery<MovieDetail, Error>({
+  const movie = useQuery<Movie, Error>({
     queryKey: ['movie', id],
     queryFn: () => getMovieDetails(+id, MediaType.MOVIE),
   });
@@ -38,14 +34,10 @@ const Movie = () => {
   function handleToggleFavorite(favorite: Favorite) {
     return function () {
       if (isFavorite) {
-        updateFavorites(
-          (favorites ?? EMPTY_ARRAY).filter(
-            (storedFavorite) => storedFavorite.id.localeCompare(favorite.id) !== ZERO
-          )
-        );
+        removeFavorite(favorite);
         return;
       }
-      updateFavorites([...(favorites ?? EMPTY_ARRAY), favorite]);
+      addFavorite(favorite);
     };
   }
 
@@ -56,7 +48,7 @@ const Movie = () => {
       return <Spinner size="large" color="$orange9" py="$10" />;
     }
 
-    const { backdrop_path, poster_path, title, tagline, release_date, overview } = movie.data!;
+    const { poster_path, title } = movie.data!;
     return (
       <>
         <Stack.Screen
@@ -74,40 +66,13 @@ const Movie = () => {
             ),
           }}
         />
-        <ImageBackground
-          height={POSTER_DIMENSIONS.height}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w400${backdrop_path}`,
-          }}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w200${poster_path}` }}
-            style={{
-              ...POSTER_DIMENSIONS,
-              margin: 12,
-            }}
-            borderRadius={6}
-          />
-        </ImageBackground>
-        <YStack p="$3">
-          <H1 color="$orange9" fontSize={38} mb="$2">
-            {title}
-            <Text
-              fontSize={18}
-              fontStyle="italic">{` (${new Date(release_date).getFullYear()})`}</Text>
-          </H1>
-          {tagline && (
-            <Paragraph color="$gray11" textAlign="right" mb="$3">
-              {tagline}
-            </Paragraph>
-          )}
-          <Paragraph fontSize={18}>{overview}</Paragraph>
-        </YStack>
+        <MovieDetail movie={movie.data!} />
       </>
     );
   }
 };
 
-export default Movie;
+export default MoviePage;
 
 function isIdInFavorites(favorites: Favorite[] | null, favoriteId: string) {
   if (!favorites) return false;
